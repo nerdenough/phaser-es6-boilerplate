@@ -25,6 +25,7 @@
     "babelify": "^7.3.0",
     "browser-sync": "^2.14.3",
     "browserify": "^13.1.0",
+    "del": "^2.2.2",
     "eslint": "^3.4.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",

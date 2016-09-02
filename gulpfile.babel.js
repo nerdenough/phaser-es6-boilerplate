@@ -1,5 +1,6 @@
 'use strict';
 
+import del from 'del';
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import uglify from 'gulp-uglify';
@@ -41,10 +42,10 @@ function build() {
     .pipe(gulp.dest(paths.scripts));
 }
 
-// Adds phaser.min.js to the build directory. The unminified version and
+// Copies phaser.min.js to the build directory. The unminified version and
 // sourcemaps for phaser will be copied if the game is built in development
 // mode.
-function addPhaser() {
+function copyPhaser() {
   let files = [paths.phaser + '/phaser.min.js'];
   if (!argv.production) {
     files.push(paths.phaser + '/phaser.js');
@@ -56,8 +57,8 @@ function addPhaser() {
     .pipe(gulp.dest(paths.scripts));
 }
 
-// Adds files from the static folder to the build directory.
-function addStatic() {
+// Copies files from the static folder to the build directory.
+function copyStatic() {
   return gulp
     .src(paths.static + '/**/*')
     .pipe(gulp.dest(paths.build));
@@ -77,6 +78,11 @@ function lint() {
     .pipe(gulpif(argv.strict, eslint.failAfterError()));
 }
 
+// Cleans the build directory.
+function cleanBuild() {
+  return del([paths.build]);
+}
+
 // Serves the build directory as a web server. Change "open" to true if you
 // want your web browser to be opened automatically.
 function serve() {
@@ -94,10 +100,11 @@ function watch() {
 }
 
 // Tasks
-gulp.task('add-static', addStatic);
-gulp.task('add-phaser', addPhaser);
+gulp.task('clean', cleanBuild);
 gulp.task('lint', lint);
-gulp.task('watch', watch);
-gulp.task('build', ['lint', 'add-static', 'add-phaser'], build);
+gulp.task('copy-phaser', ['clean'], copyPhaser);
+gulp.task('copy-static', ['copy-phaser'], copyStatic);
+gulp.task('build', ['lint', 'copy-static'], build);
 gulp.task('serve', ['build', 'watch'], serve);
+gulp.task('watch', watch);
 gulp.task('default', ['serve']);
