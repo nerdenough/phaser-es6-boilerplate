@@ -70,10 +70,6 @@ You can customise the rules for ESLint to use when linting your project by
 editing .eslintrc.json.
 
 ## Known Issues
-- The build directory is not cleared upon rebuild. This means that if a game is
-built in production mode after it was already built in development mode, the
-additional files that are written in development mode would still exist (e.g.
-sourcemaps, unminified phaser.js).
 - Browser Sync doesn't appear to be reloading the page correctly when a file is
 changed.
 
