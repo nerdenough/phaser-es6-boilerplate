@@ -56,6 +56,21 @@ is a base minimal game boilerplate that you can use/adapt/delete based on what
 you need. The boilerplate consists of a main Game class and several game states
 to modulate the initial setup for the game.
 
+#### Game
+You can declare your states in the main Game class along with any other global
+game config.
+
+#### Boot
+Boot allows you to declare the initial settings of the game, such as the stage
+colour.
+
+#### Preload
+Preload can be used to load all of your assets, show a loading screen, and
+switch to the next state when loading is complete.
+
+#### Play
+Play serves as the main game state in this example.
+
 ### Static
 The `static` folder contains the web page and styling that your game will be
 embedded into.
@@ -68,10 +83,6 @@ or written through the `paths` variable declared near the top of the file.
 ### ESLint
 You can customise the rules for ESLint to use when linting your project by
 editing .eslintrc.json.
-
-## Known Issues
-- Browser Sync doesn't appear to be reloading the page correctly when a file is
-changed.
 
 ## License
 This repository is licensed under the MIT license.

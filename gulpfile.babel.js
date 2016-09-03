@@ -92,11 +92,20 @@ function serve() {
   });
 }
 
+// Reloads the web browser through browser sync
+function reload() {
+  browserSync.reload();
+}
+
 // Watches the source and static directories, rebuilding when a change is
 // detected.
 function watch() {
-  gulp.watch(paths.source + '/**/*.js', ['build'], browserSync.reload);
-  gulp.watch(paths.static + '/**/*', ['build'], browserSync.reload);
+  let files = [
+    paths.source + '/**/*.js',
+    paths.static + '/**/*'
+  ];
+
+  let watcher = gulp.watch(files, ['rebuild']);
 }
 
 // Tasks
@@ -105,6 +114,7 @@ gulp.task('lint', lint);
 gulp.task('copy-phaser', ['clean'], copyPhaser);
 gulp.task('copy-static', ['copy-phaser'], copyStatic);
 gulp.task('build', ['lint', 'copy-static'], build);
+gulp.task('rebuild', ['build'], reload);
 gulp.task('serve', ['build', 'watch'], serve);
 gulp.task('watch', watch);
 gulp.task('default', ['serve']);
