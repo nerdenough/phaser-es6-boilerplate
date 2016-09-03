@@ -2,6 +2,7 @@
 
 import del from 'del';
 import gulp from 'gulp';
+import watch from 'gulp-watch';
 import eslint from 'gulp-eslint';
 import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
@@ -99,13 +100,15 @@ function reload() {
 
 // Watches the source and static directories, rebuilding when a change is
 // detected.
-function watch() {
+function watchFiles() {
   let files = [
     paths.source + '/**/*.js',
     paths.static + '/**/*'
   ];
 
-  let watcher = gulp.watch(files, ['rebuild']);
+  watch(files, () => {
+    gulp.start('rebuild');
+  });
 }
 
 // Tasks
@@ -116,5 +119,5 @@ gulp.task('copy-static', ['copy-phaser'], copyStatic);
 gulp.task('build', ['lint', 'copy-static'], build);
 gulp.task('rebuild', ['build'], reload);
 gulp.task('serve', ['build', 'watch'], serve);
-gulp.task('watch', watch);
+gulp.task('watch', watchFiles);
 gulp.task('default', ['serve']);
