@@ -7,6 +7,10 @@ class Preload extends Phaser.State {
     this.loadingText = this.game.add.text(32, 32, 'Loading...', {fill: '#fff'});
 
     // Load your assets here
+    this.game.load.spritesheet('player', './assets/player.png', 16, 24);
+    this.game.load.spritesheet('tiles', './assets/tiles.png', 16, 16);
+    this.game.load.tilemap('map', './assets/map.json', null,
+      Phaser.Tilemap.TILED_JSON);
 
     this.game.load.start();
   }
